@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="functionality.js"></script>
+
+
+
+  
+
+
+</head>
+<body>
+    <h1> View Crowding info at tube Stations </h1>
+    <form>
+        <label  for="Stations">Choose a station:</label>
+        <select id="Stations" name="Stations" onclick="getOption2()">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="fiat">Fiat</option>
+          <option value="audi">Audi</option>
+        </select>
+
+        
+        <label for="D">Select day:</label>
+
+        <select  id="Days" onchange="getOption()">
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+        </select>
+      </form>
+
+     <div id="result"> </div>
+
+     <p> The value of the option selected is: 
+      <span class="output1"></span>
+  </p>
+
+  <p> The value of the option selected is: 
+    <span class="output2"></span>
+</p>
+
+<button onclick="getOption()">Check option</button>
+     
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js">
+</script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js">
+</script>
+
+
+
+
+
+
+<script>
+  const xhttp = new XMLHttpRequest();
+
+  xhttp.onreadystatechange = function(){
+
+      if(this.readyState == 4 && this.status == 200){
+          myJson = JSON.parse(this.responseText);
+
+          let blueRates = myJson.blueBank.interestRates;
+          console.log("Blue rates:");
+
+          blueRates.forEach(element => {
+              console.log(element.repayPeriod + " - "+ element.interest);
+          });
+
+      }
+  } 
+  xhttp.open("GET",'https://api.tfl.gov.uk/crowding');
+  xhttp.send();
+
+</script>
+
+
+
+
+     <script type="text/javascript">
+
+      function getOption (){
+      getOption1();
+      getOption2();
+      }
+
+      function getOption1() {
+          selectElement = document.querySelector('#Days');
+          output = selectElement.value;
+          document.querySelector('.output1').textContent = output;
+      }
+      function getOption2() {
+          selectElement = document.querySelector('#Stations');
+          output = selectElement.value;
+          document.querySelector('.output2').textContent = output;
+      }
+      </script>
+
+
+      
+</body>
+</html>
